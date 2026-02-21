@@ -1,131 +1,910 @@
-<!DOCTYPE html>
+    <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LabFarm | Engenharia sob demanda</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
-<style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Inter', sans-serif;
-}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>LabFarm | Produção inteligente em impressão 3D</title>
+  <meta name="description" content="LabFarm — protótipos, peças funcionais e produção em lote com padrão profissional. Orçamento rápido no WhatsApp." />
+  <meta name="theme-color" content="#0b0f0c" />
 
-body {
-    background: #0f0f0f;
-    color: #ffffff;
-}
+  <!-- Fonte grátis (Google Fonts) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;600;700&display=swap" rel="stylesheet">
 
-header {
-    padding: 100px 20px;
-    text-align: center;
-}
+  <style>
+    :root{
+      --bg:#0b0f0c;
+      --panel:#0f1511;
+      --panel2:#0e140f;
+      --text:#e8f0ea;
+      --muted:#aab8ae;
+      --line:rgba(255,255,255,.08);
+      --accent:#6bff2a;      /* verde LabFarm */
+      --accent2:#2ee59d;     /* opcional (detalhes) */
+      --shadow: 0 18px 50px rgba(0,0,0,.55);
+      --radius: 18px;
+      --radius2: 26px;
+      --max: 1140px;
+    }
 
-h1 {
-    font-size: 52px;
-    letter-spacing: 6px;
-    font-weight: 700;
-}
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      background: radial-gradient(1200px 700px at 15% 10%, rgba(107,255,42,.10), transparent 50%),
+                  radial-gradient(900px 500px at 85% 20%, rgba(46,229,157,.08), transparent 55%),
+                  linear-gradient(180deg, #070a08 0%, var(--bg) 35%, #070a08 100%);
+      color:var(--text);
+      line-height:1.55;
+      overflow-x:hidden;
+    }
 
-h2 {
-    font-size: 22px;
-    color: #6bff2a;
-    margin-top: 20px;
-    font-weight: 300;
-}
+    a{ color:inherit; text-decoration:none; }
+    .wrap{ max-width:var(--max); margin:0 auto; padding:0 18px; }
 
-section {
-    padding: 80px 20px;
-    max-width: 1100px;
-    margin: auto;
-}
+    /* Topbar */
+    .topbar{
+      position:sticky; top:0; z-index:50;
+      backdrop-filter: blur(10px);
+      background: rgba(11,15,12,.58);
+      border-bottom:1px solid var(--line);
+    }
+    .topbar .inner{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:14px 0;
+      gap:14px;
+    }
+    .brand{
+      display:flex; align-items:center; gap:12px;
+      min-width: 180px;
+    }
+    .brand-name{
+      font-weight:700;
+      letter-spacing:.24em;
+      font-size:14px;
+    }
+    .nav{
+      display:flex; align-items:center; gap:16px;
+      color:var(--muted);
+      font-size:14px;
+    }
+    .nav a{ padding:8px 10px; border-radius:999px; }
+    .nav a:hover{ background:rgba(255,255,255,.06); color:var(--text); }
 
-.cards {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 30px;
-    justify-content: center;
-}
+    .cta{
+      display:flex; align-items:center; gap:10px;
+    }
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      gap:10px;
+      padding:12px 14px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      color:var(--text);
+      font-weight:600;
+      font-size:14px;
+      transition: transform .2s ease, background .2s ease, border-color .2s ease, opacity .2s ease;
+      cursor:pointer;
+      user-select:none;
+    }
+    .btn:hover{ transform: translateY(-1px); border-color: rgba(107,255,42,.35); }
+    .btn-primary{
+      background: linear-gradient(180deg, rgba(107,255,42,1) 0%, rgba(84,214,34,1) 100%);
+      border-color: rgba(107,255,42,.35);
+      color:#061007;
+      box-shadow: 0 12px 30px rgba(107,255,42,.18);
+    }
+    .btn-primary:hover{ opacity:.92; }
 
-.card {
-    background: #1a1a1a;
-    padding: 40px;
-    border-radius: 12px;
-    width: 300px;
-    transition: 0.3s ease;
-}
+    /* Hero */
+    .hero{
+      position:relative;
+      padding: 62px 0 24px;
+    }
+    .hero-grid{
+      display:grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap:26px;
+      align-items:stretch;
+    }
+    .badge{
+      display:inline-flex; align-items:center; gap:10px;
+      padding:8px 12px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      color:var(--muted);
+      font-size:13px;
+      width:fit-content;
+    }
+    .dot{
+      width:8px; height:8px; border-radius:999px;
+      background: var(--accent);
+      box-shadow: 0 0 0 6px rgba(107,255,42,.12);
+    }
+    h1{
+      margin:14px 0 12px;
+      font-size: 44px;
+      letter-spacing:-0.03em;
+      line-height:1.08;
+    }
+    .lead{
+      color:var(--muted);
+      font-size:16px;
+      max-width: 58ch;
+      margin:0 0 18px;
+    }
+    .hero-actions{
+      display:flex; flex-wrap:wrap; gap:12px;
+      margin-top: 18px;
+    }
+    .mini{
+      color:var(--muted);
+      font-size:13px;
+      margin-top: 10px;
+    }
 
-.card:hover {
-    transform: translateY(-8px);
-    border: 1px solid #6bff2a;
-}
+    .hero-card{
+      border:1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      border-radius: var(--radius2);
+      padding:18px;
+      box-shadow: var(--shadow);
+      position:relative;
+      overflow:hidden;
+    }
+    .hero-card::before{
+      content:"";
+      position:absolute; inset:-2px;
+      background: radial-gradient(500px 260px at 20% 20%, rgba(107,255,42,.12), transparent 60%),
+                  radial-gradient(420px 240px at 80% 60%, rgba(46,229,157,.10), transparent 60%);
+      pointer-events:none;
+    }
+    .hero-card > *{ position:relative; }
+    .card-title{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:10px;
+      margin-bottom: 10px;
+    }
+    .card-title h3{
+      margin:0;
+      font-size:14px;
+      color:var(--muted);
+      font-weight:600;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+    }
+    .chip{
+      font-size:12px;
+      color:#08120a;
+      background: rgba(107,255,42,1);
+      padding:6px 10px;
+      border-radius:999px;
+      font-weight:700;
+    }
+    .stats{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:12px;
+      margin-top: 12px;
+    }
+    .stat{
+      border:1px solid var(--line);
+      background: rgba(0,0,0,.18);
+      border-radius: 16px;
+      padding:14px 14px;
+    }
+    .stat b{
+      display:block;
+      font-size:22px;
+      letter-spacing:-.02em;
+    }
+    .stat span{
+      display:block;
+      color:var(--muted);
+      font-size:12px;
+      margin-top:2px;
+    }
 
-.card h3 {
-    margin-bottom: 15px;
-    font-size: 20px;
-}
+    .specs{
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top:1px solid var(--line);
+      display:grid;
+      gap:10px;
+    }
+    .spec{
+      display:flex; align-items:flex-start; gap:10px;
+      color:var(--muted);
+      font-size:13px;
+    }
+    .check{
+      width:18px; height:18px; border-radius:6px;
+      border:1px solid rgba(107,255,42,.35);
+      background: rgba(107,255,42,.12);
+      display:inline-flex; align-items:center; justify-content:center;
+      flex: 0 0 auto;
+      margin-top:1px;
+    }
+    .check svg{ width:12px; height:12px; fill:var(--accent); }
 
-.card p {
-    font-weight: 300;
-    color: #ccc;
-}
+    /* Sections */
+    section{
+      padding: 56px 0;
+      border-top:1px solid var(--line);
+    }
+    .section-head{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:18px;
+      margin-bottom: 18px;
+    }
+    .section-head h2{
+      margin:0;
+      font-size: 24px;
+      letter-spacing:-.02em;
+    }
+    .section-head p{
+      margin:0;
+      color:var(--muted);
+      max-width: 64ch;
+      font-size:14px;
+    }
 
-.button {
-    display: inline-block;
-    margin-top: 50px;
-    padding: 18px 45px;
-    background: #6bff2a;
-    color: #000;
-    text-decoration: none;
-    font-weight: 600;
-    border-radius: 6px;
-    transition: 0.3s;
-}
+    /* Cards grid */
+    .grid-3{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:14px;
+    }
+    .card{
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      border-radius: var(--radius);
+      padding:18px;
+      transition: transform .2s ease, border-color .2s ease, background .2s ease;
+      min-height: 170px;
+    }
+    .card:hover{
+      transform: translateY(-3px);
+      border-color: rgba(107,255,42,.28);
+      background: rgba(255,255,255,.04);
+    }
+    .icon{
+      width:40px; height:40px; border-radius: 14px;
+      border:1px solid var(--line);
+      background: rgba(0,0,0,.22);
+      display:flex; align-items:center; justify-content:center;
+      margin-bottom: 10px;
+    }
+    .icon svg{ width:20px; height:20px; stroke: var(--accent); fill:none; stroke-width:2; }
 
-.button:hover {
-    opacity: 0.85;
-}
+    .card h3{ margin:6px 0 6px; font-size:16px; }
+    .card p{ margin:0; color:var(--muted); font-size:14px; }
 
-footer {
-    text-align: center;
-    padding: 40px 20px;
-    background: #111;
-    font-size: 14px;
-    color: #777;
-}
-</style>
+    /* Process */
+    .process{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap:14px;
+      align-items:start;
+    }
+    .steps{
+      display:grid;
+      gap:10px;
+    }
+    .step{
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      border-radius: var(--radius);
+      padding:16px;
+      display:flex; gap:12px;
+    }
+    .num{
+      width:34px; height:34px;
+      border-radius: 12px;
+      border:1px solid rgba(107,255,42,.25);
+      background: rgba(107,255,42,.10);
+      display:flex; align-items:center; justify-content:center;
+      color: var(--accent);
+      font-weight:800;
+      flex: 0 0 auto;
+    }
+    .step b{ display:block; margin-bottom:2px; }
+    .step span{ color:var(--muted); font-size:14px; }
+
+    .quote{
+      border:1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      border-radius: var(--radius2);
+      padding:18px;
+      box-shadow: var(--shadow);
+    }
+    .quote small{ color:var(--muted); display:block; margin-top:10px; }
+
+    /* Portfolio */
+    .portfolio{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:14px;
+    }
+    .shot{
+      border:1px solid var(--line);
+      background: rgba(0,0,0,.25);
+      border-radius: var(--radius);
+      overflow:hidden;
+      min-height: 210px;
+      position:relative;
+    }
+    .shot .ph{
+      height: 140px;
+      background:
+        radial-gradient(500px 200px at 30% 30%, rgba(107,255,42,.14), transparent 55%),
+        linear-gradient(135deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      border-bottom:1px solid var(--line);
+    }
+    .shot .meta{
+      padding:14px;
+    }
+    .shot b{ display:block; }
+    .shot span{ color:var(--muted); font-size:13px; }
+
+    /* FAQ */
+    .faq{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:14px;
+    }
+    details{
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      border-radius: var(--radius);
+      padding:14px 14px;
+    }
+    summary{
+      cursor:pointer;
+      font-weight:700;
+      list-style:none;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+    }
+    summary::-webkit-details-marker{ display:none; }
+    .caret{
+      width:22px; height:22px; border-radius:10px;
+      border:1px solid var(--line);
+      display:flex; align-items:center; justify-content:center;
+      color:var(--muted);
+      transition: transform .2s ease;
+      flex:0 0 auto;
+    }
+    details[open] .caret{ transform: rotate(180deg); }
+    details p{
+      margin:10px 0 0;
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    /* Contact */
+    .contact{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:14px;
+      align-items:stretch;
+    }
+    .contact-card{
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      border-radius: var(--radius2);
+      padding:18px;
+    }
+    .pill{
+      display:inline-flex; gap:8px; align-items:center;
+      padding:8px 12px;
+      border-radius:999px;
+      background: rgba(107,255,42,.10);
+      border:1px solid rgba(107,255,42,.25);
+      color: var(--accent);
+      font-weight:700;
+      font-size:13px;
+      width: fit-content;
+    }
+    .contact-card h3{ margin:12px 0 8px; }
+    .contact-card p{ margin:0; color:var(--muted); }
+
+    .form{
+      display:grid;
+      gap:10px;
+      margin-top: 12px;
+    }
+    .field{
+      display:grid; gap:6px;
+    }
+    label{ font-size:12px; color:var(--muted); }
+    input, textarea{
+      width:100%;
+      padding:12px 12px;
+      border-radius: 14px;
+      border:1px solid var(--line);
+      background: rgba(0,0,0,.18);
+      color: var(--text);
+      outline:none;
+      font-family: inherit;
+      font-size:14px;
+    }
+    textarea{ min-height: 110px; resize: vertical; }
+    input:focus, textarea:focus{ border-color: rgba(107,255,42,.35); }
+
+    .form-actions{
+      display:flex; gap:10px; flex-wrap:wrap;
+      margin-top: 4px;
+    }
+
+    /* Footer */
+    footer{
+      padding: 28px 0 46px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .foot{
+      display:flex; justify-content:space-between; gap:14px;
+      flex-wrap:wrap;
+      border-top:1px solid var(--line);
+      padding-top: 18px;
+    }
+
+    /* Floating WhatsApp */
+    .float-wa{
+      position: fixed;
+      right: 16px;
+      bottom: 16px;
+      z-index: 60;
+      display:flex;
+      gap:10px;
+      align-items:center;
+    }
+    .wa-btn{
+      border:0;
+      background: linear-gradient(180deg, rgba(107,255,42,1) 0%, rgba(84,214,34,1) 100%);
+      color:#061007;
+      box-shadow: 0 18px 42px rgba(107,255,42,.22);
+      border-radius: 999px;
+      padding: 14px 16px;
+      font-weight: 800;
+      display:flex; align-items:center; gap:10px;
+      cursor:pointer;
+      transition: transform .2s ease, opacity .2s ease;
+    }
+    .wa-btn:hover{ transform: translateY(-2px); opacity:.95; }
+    .wa-btn svg{ width:18px; height:18px; fill:#061007; }
+
+    /* Small screens */
+    @media (max-width: 980px){
+      .hero-grid{ grid-template-columns: 1fr; }
+      .process{ grid-template-columns: 1fr; }
+      .grid-3{ grid-template-columns: 1fr; }
+      .portfolio{ grid-template-columns: 1fr; }
+      .faq{ grid-template-columns: 1fr; }
+      .contact{ grid-template-columns: 1fr; }
+      h1{ font-size: 38px; }
+      .nav{ display:none; } /* simples pro celular */
+    }
+
+    /* Subtle reveal animation */
+    .reveal{
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity .6s ease, transform .6s ease;
+    }
+    .reveal.on{
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
 </head>
 
 <body>
+  <!-- CONFIG -->
+  <script>
+    // WhatsApp configurado:
+    const LABFARM_WA = "5527995740028";
+  </script>
 
-<header>
-    <h1>LABFARM</h1>
-    <h2>Produção inteligente em impressão 3D</h2>
-    <a href="https://wa.me/5527995740028" class="button">Solicitar Orçamento</a>
-</header>
+  <!-- Topbar -->
+  <div class="topbar">
+    <div class="wrap">
+      <div class="inner">
+        <a class="brand" href="#top">
+          <!-- Ícone (SVG) — simples e original -->
+          <svg width="34" height="34" viewBox="0 0 64 64" aria-hidden="true">
+            <path d="M20 26 L32 18 L44 26 L44 42 L32 50 L20 42 Z" fill="none" stroke="rgba(107,255,42,.85)" stroke-width="3" />
+            <path d="M20 26 L32 34 L44 26" fill="none" stroke="rgba(107,255,42,.85)" stroke-width="3" />
+            <circle cx="32" cy="14" r="3" fill="#6bff2a"/>
+          </svg>
+          <div class="brand-name">LABFARM</div>
+        </a>
 
-<section>
-    <div class="cards">
-        <div class="card">
-            <h3>Protótipos</h3>
-            <p>Desenvolvimento rápido de peças técnicas com precisão dimensional.</p>
+        <div class="nav" aria-label="Navegação">
+          <a href="#servicos">Serviços</a>
+          <a href="#processo">Processo</a>
+          <a href="#portfolio">Portfólio</a>
+          <a href="#faq">FAQ</a>
+          <a href="#contato">Contato</a>
         </div>
-        <div class="card">
-            <h3>Peças Funcionais</h3>
-            <p>Produção sob demanda com materiais resistentes e acabamento profissional.</p>
+
+        <div class="cta">
+          <a class="btn" href="#contato">Falar com a LabFarm</a>
+          <a class="btn btn-primary" id="btnTopWa" href="#">Orçamento no WhatsApp</a>
         </div>
-        <div class="card">
-            <h3>Produção em Lote</h3>
-            <p>Escala inteligente com controle de qualidade e repetibilidade.</p>
-        </div>
+      </div>
     </div>
-</section>
+  </div>
 
-<footer>
-    © 2026 LabFarm — Engenharia sob demanda
-</footer>
+  <!-- Hero -->
+  <main id="top" class="hero">
+    <div class="wrap">
+      <div class="hero-grid">
+        <div class="reveal">
+          <div class="badge"><span class="dot"></span> Produção inteligente em impressão 3D</div>
+          <h1>Peças técnicas, protótipos e lote — com padrão profissional.</h1>
+          <p class="lead">
+            A <b>LabFarm</b> entrega impressão 3D com foco em <b>precisão</b>, <b>repetibilidade</b> e <b>prazo</b>.
+            Orçamento rápido e produção organizada para escalar.
+          </p>
 
+          <div class="hero-actions">
+            <a class="btn btn-primary" id="btnHeroWa" href="#">Pedir orçamento (WhatsApp)</a>
+            <a class="btn" href="#portfolio">Ver portfólio</a>
+            <a class="btn" href="#processo">Como funciona</a>
+          </div>
+          <div class="mini">Resposta rápida • Produção sob demanda • Atendimento direto</div>
+        </div>
+
+        <aside class="hero-card reveal">
+          <div class="card-title">
+            <h3>Controle de produção</h3>
+            <span class="chip">LABFARM</span>
+          </div>
+
+          <div class="stats">
+            <div class="stat">
+              <b>±0,2 mm*</b>
+              <span>tolerância típica (depende da peça)</span>
+            </div>
+            <div class="stat">
+              <b>24–72h*</b>
+              <span>prazo comum para itens simples</span>
+            </div>
+            <div class="stat">
+              <b>Lotes</b>
+              <span>produção repetível</span>
+            </div>
+            <div class="stat">
+              <b>Suporte</b>
+              <span>ajuste de arquivo / orientação</span>
+            </div>
+          </div>
+
+          <div class="specs">
+            <div class="spec">
+              <span class="check" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>
+              </span>
+              <div><b>Materiais</b> PLA / PETG / ABS / ASA / TPU (conforme necessidade)</div>
+            </div>
+            <div class="spec">
+              <span class="check" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>
+              </span>
+              <div><b>Acabamento</b> otimização de suportes, orientação, pós-processo simples</div>
+            </div>
+            <div class="spec">
+              <span class="check" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>
+              </span>
+              <div><b>Qualidade</b> checklist por peça em produção por lote</div>
+            </div>
+          </div>
+
+          <div class="mini" style="margin-top:10px;">
+            *Valores indicativos. Prazo e tolerância variam por geometria e material.
+          </div>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <!-- Serviços -->
+  <section id="servicos">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <h2>Serviços</h2>
+          <p>Foco em peças funcionais e produção consistente. Sem “cara de hobby”.</p>
+        </div>
+        <a class="btn" href="#contato">Quero um orçamento</a>
+      </div>
+
+      <div class="grid-3">
+        <div class="card reveal">
+          <div class="icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M7 7h10v10H7z"/><path d="M4 12h3m10 0h3M12 4v3m0 10v3"/></svg>
+          </div>
+          <h3>Protótipos</h3>
+          <p>Iteração rápida para validação de encaixe, função e montagem.</p>
+        </div>
+
+        <div class="card reveal">
+          <div class="icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M7 21h10"/><path d="M9 17h6"/><path d="M8 17V9a4 4 0 0 1 8 0v8"/></svg>
+          </div>
+          <h3>Peças funcionais</h3>
+          <p>Materiais e orientação pensados para resistência e vida útil.</p>
+        </div>
+
+        <div class="card reveal">
+          <div class="icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M4 7h16"/><path d="M6 7v10a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7"/><path d="M9 11h6"/></svg>
+          </div>
+          <h3>Produção em lote</h3>
+          <p>Padronização, repetibilidade e controle para vender com confiança.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Processo -->
+  <section id="processo">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <h2>Como funciona</h2>
+          <p>Fluxo simples, direto e eficiente — do arquivo até a entrega.</p>
+        </div>
+      </div>
+
+      <div class="process">
+        <div class="steps">
+          <div class="step reveal">
+            <div class="num">1</div>
+            <div><b>Envie o arquivo (STL/STEP)</b><span>Ou a ideia/foto + medidas. A gente orienta.</span></div>
+          </div>
+          <div class="step reveal">
+            <div class="num">2</div>
+            <div><b>Orçamento e prazo</b><span>Material, acabamento, quantidade e prazo definidos.</span></div>
+          </div>
+          <div class="step reveal">
+            <div class="num">3</div>
+            <div><b>Produção + controle</b><span>Checklist por lote e consistência de impressão.</span></div>
+          </div>
+          <div class="step reveal">
+            <div class="num">4</div>
+            <div><b>Entrega / retirada</b><span>Envio ou retirada conforme combinado.</span></div>
+          </div>
+        </div>
+
+        <div class="quote reveal">
+          <div class="pill">Diferencial</div>
+          <h3 style="margin:12px 0 8px;">Cara de empresa, não de “impressora em casa”.</h3>
+          <p style="margin:0;color:var(--muted);">
+            Organização de produção, padrão visual e comunicação direta para facilitar compra, reposição e escala.
+          </p>
+          <small>Se você vende produtos impressos, a LabFarm ajuda a estabilizar a produção.</small>
+
+          <div class="hero-actions" style="margin-top:14px;">
+            <a class="btn btn-primary" id="btnProcWa" href="#">Falar no WhatsApp</a>
+            <a class="btn" href="#faq">Dúvidas frequentes</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Portfólio -->
+  <section id="portfolio">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <h2>Portfólio</h2>
+          <p>Troque os cards abaixo por fotos reais suas (isso deixa o site “premium” na hora).</p>
+        </div>
+      </div>
+
+      <div class="portfolio">
+        <div class="shot reveal">
+          <div class="ph"></div>
+          <div class="meta">
+            <b>Peça funcional</b>
+            <span>PETG • Encaixe • Reforço</span>
+          </div>
+        </div>
+        <div class="shot reveal">
+          <div class="ph"></div>
+          <div class="meta">
+            <b>Produto em lote</b>
+            <span>Padronização • Repetibilidade</span>
+          </div>
+        </div>
+        <div class="shot reveal">
+          <div class="ph"></div>
+          <div class="meta">
+            <b>Protótipo</b>
+            <span>Iteração rápida • Ajuste fino</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="mini" style="margin-top:12px;">
+        Dica: foto com fundo limpo + luz forte (abajur/softbox simples) = site “de empresa grande”.
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <h2>FAQ</h2>
+          <p>Respostas curtas pra reduzir ida e volta no WhatsApp.</p>
+        </div>
+      </div>
+
+      <div class="faq">
+        <details class="reveal">
+          <summary>Quais formatos de arquivo vocês aceitam? <span class="caret">⌄</span></summary>
+          <p>STL para impressão direta. STEP é ótimo quando precisa ajustar o modelo antes.</p>
+        </details>
+
+        <details class="reveal">
+          <summary>Qual material é “o melhor”? <span class="caret">⌄</span></summary>
+          <p>Depende do uso: PLA (visual), PETG (resistência), ABS/ASA (calor/sol), TPU (flexível).</p>
+        </details>
+
+        <details class="reveal">
+          <summary>Vocês fazem produção em lote? <span class="caret">⌄</span></summary>
+          <p>Sim. Definimos padrão, material, acabamento e repetimos com controle por lote.</p>
+        </details>
+
+        <details class="reveal">
+          <summary>Quanto tempo demora? <span class="caret">⌄</span></summary>
+          <p>Peças simples geralmente saem rápido. Prazo final depende do volume e acabamento.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contato -->
+  <section id="contato">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <h2>Contato</h2>
+          <p>Para orçamento, mande: arquivo + material desejado + quantidade + cidade.</p>
+        </div>
+      </div>
+
+      <div class="contact">
+        <div class="contact-card reveal">
+          <div class="pill">Orçamento rápido</div>
+          <h3>WhatsApp</h3>
+          <p>Responda com o máximo de detalhes e eu já te devolvo preço + prazo.</p>
+
+          <div class="hero-actions" style="margin-top:14px;">
+            <a class="btn btn-primary" id="btnContactWa" href="#">Chamar no WhatsApp</a>
+            <a class="btn" href="#portfolio">Ver portfólio</a>
+          </div>
+
+          <div class="mini" style="margin-top:10px;">
+            Número: (27) 99574-0028
+          </div>
+        </div>
+
+        <div class="contact-card reveal">
+          <div class="pill">Mensagem pronta</div>
+          <h3>Gerar texto do orçamento</h3>
+          <p>Preencha e clique para abrir no WhatsApp com a mensagem montada.</p>
+
+          <div class="form">
+            <div class="field">
+              <label for="nome">Seu nome</label>
+              <input id="nome" placeholder="Ex: João" />
+            </div>
+            <div class="field">
+              <label for="qtd">Quantidade</label>
+              <input id="qtd" placeholder="Ex: 20 unidades" />
+            </div>
+            <div class="field">
+              <label for="material">Material</label>
+              <input id="material" placeholder="Ex: PETG / PLA / ABS / ASA / TPU" />
+            </div>
+            <div class="field">
+              <label for="detalhes">Detalhes</label>
+              <textarea id="detalhes" placeholder="Ex: uso da peça, cor, medidas, prazo desejado..."></textarea>
+            </div>
+
+            <div class="form-actions">
+              <button class="btn btn-primary" id="btnFormWa" type="button">Enviar no WhatsApp</button>
+              <button class="btn" id="btnClear" type="button">Limpar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <div class="foot">
+          <div>© <span id="year"></span> LabFarm — Engenharia sob demanda</div>
+          <div>Feito com foco em performance • GitHub Pages</div>
+        </div>
+      </footer>
+    </div>
+  </section>
+
+  <!-- WhatsApp flutuante -->
+  <div class="float-wa" aria-label="WhatsApp">
+    <button class="wa-btn" id="btnFloatWa" type="button" title="Orçamento no WhatsApp">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M20.52 3.48A11.77 11.77 0 0 0 12.05 0C5.5.01.18 5.34.2 11.9c0 2.1.55 4.14 1.6 5.94L0 24l6.33-1.66a11.72 11.72 0 0 0 5.69 1.45h.01c6.56 0 11.9-5.34 11.9-11.9 0-3.18-1.24-6.17-3.41-8.41ZM12.02 21.7a9.8 9.8 0 0 1-5-1.38l-.36-.21-3.76.99 1-3.66-.24-.38a9.84 9.84 0 1 1 8.36 4.64Zm5.75-7.34c-.31-.15-1.83-.9-2.12-1.01-.29-.11-.5-.15-.71.15-.21.31-.82 1.01-1 1.22-.19.21-.37.23-.68.08-.31-.15-1.31-.48-2.5-1.53-.93-.83-1.56-1.86-1.74-2.17-.18-.31-.02-.48.13-.63.14-.14.31-.37.46-.56.15-.19.21-.31.31-.52.1-.21.05-.38-.03-.53-.08-.15-.71-1.71-.97-2.34-.26-.63-.53-.55-.71-.55h-.61c-.21 0-.53.08-.81.38-.28.31-1.06 1.03-1.06 2.52 0 1.48 1.08 2.92 1.23 3.12.15.21 2.13 3.26 5.16 4.57.72.31 1.28.5 1.71.64.72.23 1.38.2 1.9.12.58-.09 1.83-.75 2.09-1.48.26-.73.26-1.35.18-1.48-.08-.13-.29-.21-.6-.36Z"/>
+      </svg>
+      WhatsApp
+    </button>
+  </div>
+
+  <script>
+    // ========= WhatsApp helpers =========
+    function waLink(message){
+      const base = "https://wa.me/" + LABFARM_WA;
+      if(!message) return base;
+      return base + "?text=" + encodeURIComponent(message);
+    }
+
+    const quickMsg = "Olá! Quero um orçamento com a LabFarm.\n\nArquivo/peça: \nQuantidade: \nMaterial: \nCidade: \nPrazo desejado: \nObservações:";
+    document.getElementById("btnTopWa").href = waLink(quickMsg);
+    document.getElementById("btnHeroWa").href = waLink(quickMsg);
+    document.getElementById("btnProcWa").href = waLink(quickMsg);
+    document.getElementById("btnContactWa").href = waLink(quickMsg);
+
+    document.getElementById("btnFloatWa").addEventListener("click", () => {
+      window.open(waLink(quickMsg), "_blank");
+    });
+
+    document.getElementById("btnFormWa").addEventListener("click", () => {
+      const nome = document.getElementById("nome").value.trim();
+      const qtd = document.getElementById("qtd").value.trim();
+      const material = document.getElementById("material").value.trim();
+      const detalhes = document.getElementById("detalhes").value.trim();
+
+      const msg =
+        "Olá! Quero um orçamento com a LabFarm.\n\n" +
+        (nome ? ("Nome: " + nome + "\n") : "") +
+        (qtd ? ("Quantidade: " + qtd + "\n") : "") +
+        (material ? ("Material: " + material + "\n") : "") +
+        (detalhes ? ("Detalhes: " + detalhes + "\n") : "") +
+        "\n(Se tiver arquivo STL/STEP, mando em seguida.)";
+
+      window.open(waLink(msg), "_blank");
+    });
+
+    document.getElementById("btnClear").addEventListener("click", () => {
+      ["nome","qtd","material","detalhes"].forEach(id => document.getElementById(id).value = "");
+    });
+
+    // ========= Year =========
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // ========= Simple reveal on scroll =========
+    const els = document.querySelectorAll(".reveal");
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if(e.isIntersecting) e.target.classList.add("on");
+      });
+    }, { threshold: 0.12 });
+    els.forEach(el => io.observe(el));
+  </script>
 </body>
 </html>
